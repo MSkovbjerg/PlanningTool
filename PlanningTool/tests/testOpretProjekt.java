@@ -9,5 +9,8 @@ public class testOpretProjekt {
 	 * 2. Et nyt projekt oprettes med navn og et projektnummer i form af et årstal og et løbenummer, feks. "030901".
 	 * 3. Der tjekkes om projektet er oprettet. 
 	 */
-
+	@Test
+	public void testOprettelseAfProjekt(){
+		
+	}
 }
