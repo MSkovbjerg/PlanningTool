@@ -11,6 +11,9 @@ public class testOpretProjekt {
 	 */
 	@Test
 	public void testOprettelseAfProjekt(){
+		int hej;
+		int med;
+		
 		
 	}
 }
