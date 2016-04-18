@@ -12,9 +12,5 @@ public class testOpretProjekt {
 	@Test
 	public void testOprettelseAfProjekt(){
 
-		System.out.print("HEEEJ!");
-		/* PLZ*/
-		//TEST BLALBL
-		//Hrallo
 	}
 }
