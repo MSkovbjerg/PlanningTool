@@ -12,6 +12,7 @@ public class testOpretProjekt {
 	 */
 	@Test
 	public void testOprettelseAfProjekt(){
+<<<<<<< HEAD
 		
 		PlanningMain login = new PlanningMain();
 		
@@ -21,5 +22,8 @@ public class testOpretProjekt {
 		
 		assertTrue(code);
 		assertTrue(login.managerLoggedIn());
+=======
+
+>>>>>>> refs/remotes/origin/master
 	}
 }

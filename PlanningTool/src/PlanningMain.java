@@ -1,5 +1,6 @@
 
 public class PlanningMain {
+
 	private boolean managerLoggedIn = false;
 
 	public boolean managerLoggedIn() {
