@@ -1,4 +1,5 @@
 import static org.junit.Assert.*;
+
 import org.junit.Test;
 
 public class testOpretProjekt {
@@ -11,10 +12,14 @@ public class testOpretProjekt {
 	 */
 	@Test
 	public void testOprettelseAfProjekt(){
-
-		System.out.print("HEEEJ!");
-		/* PLZ*/
-		//TEST BLALBL
-		//Hrallo plz werk werk werk 
+		
+		PlanningMain login = new PlanningMain();
+		
+		assertFalse(login.managerLoggedIn());
+		
+		boolean code = login.managerLoggedIn("hund");
+		
+		assertTrue(code);
+		assertTrue(login.managerLoggedIn());
 	}
 }
