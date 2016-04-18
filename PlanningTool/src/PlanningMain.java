@@ -1,4 +1,4 @@
 
 public class PlanningMain {
-	// Test hej hej hej
+	// Test hej hej
 }
