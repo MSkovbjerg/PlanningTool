@@ -12,6 +12,7 @@ public class testOpretProjekt {
 	@Test
 	public void testOprettelseAfProjekt(){
 
-		/* PLZ */
+		/* PLZ*/
+		//TEST BLALBL
 	}
 }
