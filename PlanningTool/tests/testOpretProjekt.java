@@ -14,6 +14,6 @@ public class testOpretProjekt {
 
 		/* PLZ*/
 		//TEST BLALBL
-		//Hrallo plz werk werk werk 
+		//Hrallo
 	}
 }
