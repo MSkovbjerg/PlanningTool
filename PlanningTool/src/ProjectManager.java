@@ -25,9 +25,9 @@ public class ProjectManager {
 	public Set<Project> getProjects() {
 		return projectSet;
 	}
-
-	public Project createProject(String projName, Employee projLead, String projStart, String projEnd) {
-		Project newProj = new Project(projName, projLead, projStart, projEnd, nextID);
+	
+	public Project createProject(String projName, Map<String, Object> param) {
+		Project newProj = new Project(projName, nextID, this, param);
 		nextID++;
 		projectSet.add(newProj);
 		return newProj;
