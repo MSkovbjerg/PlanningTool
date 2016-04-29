@@ -28,8 +28,8 @@ public class testOpretProjekt{
 	    System.setOut(null);
 	    System.setErr(null);
 	}
-	
 
+/*
 	// 1. Som medarbejer, vil jeg gerne kunne logge ind i systemet, så jeg kan oprette et projekt.
 	@Test
 	public void testLogin(){
@@ -461,20 +461,21 @@ public class testOpretProjekt{
     	assertEquals(foundAct.getName(), actName);
     }
 
-    /* 5. Som projektleder, vil jeg gerne kunne tilføje mere end én medarbejder på et projekt og dets aktiviteter,
-    	  så flere medarbejdere kan arbejde på samme projekt. *//*
     @Test
-    public void testAddEmployee(){
+    public void testCreateActivityTwoEmployees(){
     	ProjectManager projMan = new ProjectManager();
-
-    	Login li = new Login();
+    	Login li = new Login(projMan);
     	Employee emp = li.signIn("hund");
-		assertNotNull(emp);
+
+    	assertNotNull(emp);
 
     	String projName = "Et eller andet projekt";
     	Employee projLead = projMan.getEmployee("hund");
 
-    	Project newProj = projMan.createProject(projName, projLead);
+    	Map<String, Object> param = new HashMap<String, Object>();
+    	param.put("projLead", projLead);
+    	
+    	Project newProj = projMan.createProject(projName, param);
 
     	assertEquals(newProj.getName(), projName);
 
@@ -485,20 +486,133 @@ public class testOpretProjekt{
     	Employee empTwo = projMan.getEmployee("kat");
     	actEmployees.add(empOne);
     	actEmployees.add(empTwo);
+    	    	
+    	// I ugenumre.
+    	int actBudget = 10;
+    	String actStart = "14, 2016";
+    	String actEnd = "25, 2016";
+    	
+    	assertEquals(newProj.getActivities().size(), 0);
+    	
+		Activity newAct = newProj.createActivity(actName, actEmployees, actStart, actEnd, actBudget);
 
-		Activity newAct = projMan.createActivity(actName, actEmployees);
-
+		assertEquals(1, newProj.getActivities().size());
+		
 		assertSame(newAct.getEmployees(), actEmployees);
+		assertEquals(2, newAct.getEmployees().size());
+		
 		assertTrue(newAct.getEmployees().contains(empOne));
 		assertTrue(newAct.getEmployees().contains(empTwo));
 
+    	Activity foundAct = newProj.getActivities().iterator().next();
+
+    	assertSame(newAct, foundAct);
+    	assertSame(foundAct.getEmployees(), actEmployees);
+    	assertEquals(foundAct.getName(), actName);
+    }
+    
+    @Test
+    public void testCreateActivityDupName(){
+    	ProjectManager projMan = new ProjectManager();
+    	Login li = new Login(projMan);
+    	Employee emp = li.signIn("hund");
+
+    	assertNotNull(emp);
+
+    	String projName = "Et eller andet projekt";
+    	Employee projLead = projMan.getEmployee("hund");
+
+    	Map<String, Object> param = new HashMap<String, Object>();
+    	param.put("projLead", projLead);
+    	
+    	Project newProj = projMan.createProject(projName, param);
+
+    	assertEquals(newProj.getName(), projName);
+
+    	String actName = "En Aktivitet";
+
+    	Set<Employee> actEmployees = new HashSet<Employee>();
+    	Employee empOne = projMan.getEmployee("hund");
+    	actEmployees.add(empOne);
+    	
+    	// I ugenumre.
+    	int actBudget = 10;
+    	String actStart = "14, 2016";
+    	String actEnd = "25, 2016";
+    	
     	assertEquals(newProj.getActivities().size(), 0);
+    	
+		Activity newAct = newProj.createActivity(actName, actEmployees, actStart, actEnd, actBudget);
 
-    	newProj.addActivity(newAct);
-
-    	assertEquals(newProj.getActivities.size(), 1);
+		assertEquals(newProj.getActivities().size(), 1);
+		
+		assertSame(newAct.getEmployees(), actEmployees);
+		assertSame(newAct.getEmployees().iterator().next(), empOne);
 
     	Activity foundAct = newProj.getActivities().iterator().next();
+
+    	assertSame(newAct, foundAct);
+    	assertSame(foundAct.getEmployees(), actEmployees);
+    	assertEquals(foundAct.getName(), actName);
+    	
+		Activity newAct2 = newProj.createActivity(actName, actEmployees, actStart, actEnd, actBudget);
+		
+		assertTrue(errContent.toString().contains("Error: Invalid activity name."));
+
+		assertNull(newAct2);
+
+		assertEquals(newProj.getActivities().size(), 1);
+    }
+    
+    // 5. Som projektleder, vil jeg gerne kunne tilføje mere end én medarbejder på et projekt og dets aktiviteter,
+    //	  så flere medarbejdere kan arbejde på samme projekt.
+    @Test
+    public void testAddEmployee(){
+    	ProjectManager projMan = new ProjectManager();
+    	Login li = new Login(projMan);
+    	Employee emp = li.signIn("hund");
+
+    	assertNotNull(emp);
+
+    	String projName = "Et eller andet projekt";
+    	Employee projLead = projMan.getEmployee("hund");
+
+    	Map<String, Object> param = new HashMap<String, Object>();
+    	param.put("projLead", projLead);
+    	
+    	Project newProj = projMan.createProject(projName, param);
+
+    	assertEquals(newProj.getName(), projName);
+
+    	String actName = "En Aktivitet";
+
+    	Set<Employee> actEmployees = new HashSet<Employee>();
+    	Employee empOne = projMan.getEmployee("hund");
+    	Employee empTwo = projMan.getEmployee("kat");
+    	actEmployees.add(empOne);
+    	actEmployees.add(empTwo);
+    	
+    	// I ugenumre.
+    	int actBudget = 10;
+    	String actStart = "14, 2016";
+    	String actEnd = "25, 2016";
+    	
+    	assertEquals(newProj.getActivities().size(), 0);
+    	
+		Activity newAct = newProj.createActivity(actName, actEmployees, actStart, actEnd, actBudget);
+
+		assertEquals(newProj.getActivities().size(), 1);
+		
+		assertSame(newAct.getEmployees(), actEmployees);
+
+		assertTrue(newAct.getEmployees().contains(empOne));
+		assertTrue(newAct.getEmployees().contains(empTwo));
+
+    	Activity foundAct = newProj.getActivities().iterator().next();
+
+    	assertSame(newAct, foundAct);
+    	assertSame(foundAct.getEmployees(), actEmployees);
+    	assertEquals(foundAct.getName(), actName);
 
     	assertSame(newAct, foundAct);
     	assertTrue(foundAct.getEmployees().contains(empOne));
@@ -507,33 +621,403 @@ public class testOpretProjekt{
 
     	Employee empThree = projMan.getEmployee("fritte");
 
-    	foundAct.addEmployee(empThree);
+    	newAct.addEmployee(empThree);
 
+    	assertEquals(3, newAct.getEmployees().size());
+    	assertTrue(newAct.getEmployees().contains(empThree));
     	assertTrue(foundAct.getEmployees().contains(empThree));
     }
-*/
-    /* 6. Som medarbejder, vil jeg gerne kunne registrere hvor meget tid jeg bruger på forskellige aktiviteter hver dag,
-    	  så min projektleder og jeg kan holde øje med tiden. *//*
+    
+    @Test
+    public void testAddEmployeeWrongEmp(){
+    	ProjectManager projMan = new ProjectManager();
+    	Login li = new Login(projMan);
+    	Employee emp = li.signIn("hund");
+
+    	assertNotNull(emp);
+
+    	String projName = "Et eller andet projekt";
+    	Employee projLead = projMan.getEmployee("hund");
+
+    	Map<String, Object> param = new HashMap<String, Object>();
+    	param.put("projLead", projLead);
+    	
+    	Project newProj = projMan.createProject(projName, param);
+
+    	assertEquals(newProj.getName(), projName);
+
+    	String actName = "En Aktivitet";
+
+    	Set<Employee> actEmployees = new HashSet<Employee>();
+    	Employee empOne = projMan.getEmployee("hund");
+    	Employee empTwo = projMan.getEmployee("kat");
+    	actEmployees.add(empOne);
+    	actEmployees.add(empTwo);
+    	
+    	// I ugenumre.
+    	int actBudget = 10;
+    	String actStart = "14, 2016";
+    	String actEnd = "25, 2016";
+    	
+    	assertEquals(newProj.getActivities().size(), 0);
+    	
+		Activity newAct = newProj.createActivity(actName, actEmployees, actStart, actEnd, actBudget);
+
+		assertEquals(newProj.getActivities().size(), 1);
+		
+		assertSame(newAct.getEmployees(), actEmployees);
+
+		assertTrue(newAct.getEmployees().contains(empOne));
+		assertTrue(newAct.getEmployees().contains(empTwo));
+
+    	Activity foundAct = newProj.getActivities().iterator().next();
+
+    	assertSame(newAct, foundAct);
+    	assertSame(foundAct.getEmployees(), actEmployees);
+    	assertEquals(foundAct.getName(), actName);
+
+    	assertSame(newAct, foundAct);
+    	assertTrue(foundAct.getEmployees().contains(empOne));
+    	assertTrue(foundAct.getEmployees().contains(empTwo));
+    	assertEquals(foundAct.getName(), actName);
+
+    	Employee empThree = projMan.getEmployee("forkert");
+
+    	newAct.addEmployee(empThree);
+
+		assertTrue(errContent.toString().contains("Error: Employee doesn't exist."));
+   	
+		assertEquals(2, newAct.getEmployees().size());
+    	assertFalse(newAct.getEmployees().contains(empThree));
+    	assertFalse(foundAct.getEmployees().contains(empThree));
+    }
+
+    // x. Som medarbejder vil gerne kunne få en liste over alle employees.
+    @Test
+    public void getEmployeeList(){
+    	ProjectManager projMan = new ProjectManager();
+    	Login li = new Login(projMan);
+    	Employee emp = li.signIn("hund");
+
+    	assertNotNull(emp);
+
+    	Map<String, Employee> emps = projMan.getEmployeeMap();
+    	
+		assertTrue(outContent.toString().contains("hund"));
+		assertTrue(outContent.toString().contains("kat"));
+		assertTrue(outContent.toString().contains("fritte"));
+
+		Employee empsEmp = emps.get("hund");
+		Employee projEmp = projMan.getEmployee("hund");
+		
+		assertSame(empsEmp, projEmp);
+    }
+
+    // 6. Som medarbejder, vil jeg gerne kunne registrere hvor meget tid jeg bruger på forskellige aktiviteter hver dag,
+    //	  så min projektleder og jeg kan holde øje med tiden.
     @Test
     public void testRegisterTime(){
+    	ProjectManager projMan = new ProjectManager();
+    	Login li = new Login(projMan);
+    	Employee emp = li.signIn("hund");
 
+    	assertNotNull(emp);
+
+    	String projName = "Et eller andet projekt";
+    	Employee projLead = projMan.getEmployee("hund");
+
+    	Map<String, Object> param = new HashMap<String, Object>();
+    	param.put("projLead", projLead);
+    	
+    	Project newProj = projMan.createProject(projName, param);
+
+    	assertEquals(newProj.getName(), projName);
+
+    	String actName = "En Aktivitet";
+
+    	Set<Employee> actEmployees = new HashSet<Employee>();
+    	Employee empOne = projMan.getEmployee("hund");
+    	Employee empTwo = projMan.getEmployee("kat");
+    	actEmployees.add(empOne);
+    	actEmployees.add(empTwo);
+    	
+    	// I ugenumre.
+    	int actBudget = 10;
+    	String actStart = "14, 2016";
+    	String actEnd = "25, 2016";
+    	
+    	assertEquals(newProj.getActivities().size(), 0);
+    	
+		Activity newAct = newProj.createActivity(actName, actEmployees, actStart, actEnd, actBudget);
+
+    	assertEquals(newProj.getActivities().size(), 1);
+    	
+    	String timedate = "2016 08 20 14 30 17 00";
+    	
+		emp.editWorkTime(timedate, newAct);
+		newAct.editWorkTime(timedate, emp);
+		
+		String date = timedate.substring(0, 10);
+		String time = timedate.substring(11);
+		String projActName = newProj.getName() + " " + newAct.getName();
+		
+		// "2016 08 20 14 30 17 00 projName actName"
+		assertEquals(time + " " + projActName, emp.getWorkTime(date));
+		// "2016 08 20 14 30 17 00 employee"
+		assertEquals(time + " " + emp.getName(), newAct.getWorkTime(date));
     }
-*//*
+    
+    @Test
+    public void testRegisterTimeDouble(){
+    	ProjectManager projMan = new ProjectManager();
+    	Login li = new Login(projMan);
+    	Employee emp = li.signIn("hund");
+
+    	assertNotNull(emp);
+
+    	String projName = "Et eller andet projekt";
+    	Employee projLead = projMan.getEmployee("hund");
+
+    	Map<String, Object> param = new HashMap<String, Object>();
+    	param.put("projLead", projLead);
+    	
+    	Project newProj = projMan.createProject(projName, param);
+
+    	assertEquals(newProj.getName(), projName);
+
+    	String actName = "En Aktivitet";
+
+    	Set<Employee> actEmployees = new HashSet<Employee>();
+    	Employee empOne = projMan.getEmployee("hund");
+    	Employee empTwo = projMan.getEmployee("kat");
+    	actEmployees.add(empOne);
+    	actEmployees.add(empTwo);
+    	
+    	// I ugenumre.
+    	int actBudget = 10;
+    	String actStart = "14, 2016";
+    	String actEnd = "25, 2016";
+    	
+    	assertEquals(newProj.getActivities().size(), 0);
+    	
+		Activity newAct = newProj.createActivity(actName, actEmployees, actStart, actEnd, actBudget);
+
+    	assertEquals(newProj.getActivities().size(), 1);
+    	
+    	String timedate = "2016 08 20 14 30 17 00";
+    	
+		emp.editWorkTime(timedate, newAct);
+		newAct.editWorkTime(timedate, emp);
+		
+		String date = timedate.substring(0, 10);
+		String time = timedate.substring(11);
+		String projActName = newProj.getName() + " " + newAct.getName();
+		
+		// "2016 08 20 14 30 17 00 projName actName"
+		assertEquals(time + " " + projActName, emp.getWorkTime(date));
+		// "2016 08 20 14 30 17 00 employee"
+		assertEquals(time + " " + emp.getName(), newAct.getWorkTime(date));
+		
+		timedate = "2016 08 20 09 00 13 00";
+		
+		String newTime = timedate.substring(11);
+		
+		String empTimeFormat = time + " " + projActName + " " + newTime + " " + projActName;
+		String actTimeFormat = time + " " + emp.getName() + " " + newTime + " " + emp.getName();
+		
+		emp.editWorkTime(timedate, newAct);
+		newAct.editWorkTime(timedate, emp);
+		assertEquals(empTimeFormat, emp.getWorkTime(date));
+		assertEquals(actTimeFormat, newAct.getWorkTime(date));		
+    }
+    
+    @Test
+    public void testRegisterTimeReplace(){
+    	ProjectManager projMan = new ProjectManager();
+    	Login li = new Login(projMan);
+    	Employee emp = li.signIn("hund");
+
+    	assertNotNull(emp);
+
+    	String projName = "Et eller andet projekt";
+    	Employee projLead = projMan.getEmployee("hund");
+
+    	Map<String, Object> param = new HashMap<String, Object>();
+    	param.put("projLead", projLead);
+    	
+    	Project newProj = projMan.createProject(projName, param);
+
+    	assertEquals(newProj.getName(), projName);
+
+    	String actName = "En Aktivitet";
+
+    	Set<Employee> actEmployees = new HashSet<Employee>();
+    	Employee empOne = projMan.getEmployee("hund");
+    	Employee empTwo = projMan.getEmployee("kat");
+    	actEmployees.add(empOne);
+    	actEmployees.add(empTwo);
+    	
+    	// I ugenumre.
+    	int actBudget = 10;
+    	String actStart = "14, 2016";
+    	String actEnd = "25, 2016";
+    	
+    	assertEquals(newProj.getActivities().size(), 0);
+    	
+		Activity newAct = newProj.createActivity(actName, actEmployees, actStart, actEnd, actBudget);
+
+    	assertEquals(newProj.getActivities().size(), 1);
+    	
+    	String timedate = "2016 08 20 14 30 17 00";
+    	
+		emp.editWorkTime(timedate, newAct);
+		newAct.editWorkTime(timedate, emp);
+		
+		String date = timedate.substring(0, 10);
+		String time = timedate.substring(11);
+		String projActName = newProj.getName() + " " + newAct.getName();
+		
+		// "2016 08 20 14 30 17 00 projName actName"
+		assertEquals(time + " " + projActName, emp.getWorkTime(date));
+		// "2016 08 20 14 30 17 00 employee"
+		assertEquals(time + " " + emp.getName(), newAct.getWorkTime(date));
+		
+		timedate = "2016 08 20 09 00 13 00";
+		
+		String newTime = timedate.substring(11);
+		
+		String empTimeFormat = newTime + " " + projActName;
+		String actTimeFormat = newTime + " " + emp.getName();
+		
+		emp.replaceWorkTime(timedate, newAct);
+		newAct.replaceWorkTime(timedate, emp);
+		assertEquals(empTimeFormat, emp.getWorkTime(date));
+		assertEquals(actTimeFormat, newAct.getWorkTime(date));		
+    }
+*/
+    @Test
+    public void testGetHistory(){
+    	ProjectManager projMan = new ProjectManager();
+    	Login li = new Login(projMan);
+    	Employee emp = li.signIn("hund");
+
+    	assertNotNull(emp);
+
+    	String projName = "Et eller andet projekt";
+    	Employee projLead = projMan.getEmployee("hund");
+
+    	Map<String, Object> param = new HashMap<String, Object>();
+    	param.put("projLead", projLead);
+    	
+    	Project newProj = projMan.createProject(projName, param);
+
+    	assertEquals(newProj.getName(), projName);
+
+    	String actName = "En Aktivitet";
+
+    	Set<Employee> actEmployees = new HashSet<Employee>();
+    	Employee empOne = projMan.getEmployee("hund");
+    	Employee empTwo = projMan.getEmployee("kat");
+    	actEmployees.add(empOne);
+    	actEmployees.add(empTwo);
+    	
+    	// I ugenumre.
+    	int actBudget = 10;
+    	String actStart = "14, 2016";
+    	String actEnd = "25, 2016";
+    	
+    	assertEquals(newProj.getActivities().size(), 0);
+    	
+		Activity newAct = newProj.createActivity(actName, actEmployees, actStart, actEnd, actBudget);
+
+    	assertEquals(newProj.getActivities().size(), 1);
+    	
+    	String timedate = "2016 08 20 14 30 17 00";
+    	
+    	String date1 = "2016 01 21";
+    	String date2 = "2017 04 23";
+    	
+		emp.editWorkTime(timedate, newAct);
+		newAct.editWorkTime(timedate, emp);
+		
+		String date = timedate.substring(0, 10);
+		String time = timedate.substring(11);
+		String projActName = newProj.getName() + " " + newAct.getName();
+		
+		// "2016 08 20 14 30 17 00 projName actName"
+		assertEquals(time + " " + projActName, emp.getWorkTime(date));
+		
+		String worktimes = emp.getWorkTime(date1 + " " + date2);
+		
+		assertEquals(timedate + " " + projActName, worktimes);
+    }
+    
+    @Test
+    public void testGetHistoryWrong(){
+    	ProjectManager projMan = new ProjectManager();
+    	Login li = new Login(projMan);
+    	Employee emp = li.signIn("hund");
+
+    	assertNotNull(emp);
+
+    	String projName = "Et eller andet projekt";
+    	Employee projLead = projMan.getEmployee("hund");
+
+    	Map<String, Object> param = new HashMap<String, Object>();
+    	param.put("projLead", projLead);
+    	
+    	Project newProj = projMan.createProject(projName, param);
+
+    	assertEquals(newProj.getName(), projName);
+
+    	String actName = "En Aktivitet";
+
+    	Set<Employee> actEmployees = new HashSet<Employee>();
+    	Employee empOne = projMan.getEmployee("hund");
+    	Employee empTwo = projMan.getEmployee("kat");
+    	actEmployees.add(empOne);
+    	actEmployees.add(empTwo);
+    	
+    	// I ugenumre.
+    	int actBudget = 10;
+    	String actStart = "14, 2016";
+    	String actEnd = "25, 2016";
+    	
+    	assertEquals(newProj.getActivities().size(), 0);
+    	
+		Activity newAct = newProj.createActivity(actName, actEmployees, actStart, actEnd, actBudget);
+
+    	assertEquals(newProj.getActivities().size(), 1);
+    	
+    	String timedate = "2016 08 20 14 30 17 00";
+    	
+    	String date1 = "2016 01 21";
+    	String date2 = "2016 04 23";
+    	
+		emp.editWorkTime(timedate, newAct);
+		newAct.editWorkTime(timedate, emp);
+		
+		String date = timedate.substring(0, 10);
+		String time = timedate.substring(11);
+		String projActName = newProj.getName() + " " + newAct.getName();
+		
+		// "2016 08 20 14 30 17 00 projName actName"
+		assertEquals(time + " " + projActName, emp.getWorkTime(date));
+		
+		String worktimes = emp.getWorkTime(date1 + " " + date2);
+		
+		assertEquals("", worktimes);
+    }
+/*
     // 7. Som projektleder, vil jeg gerne kunne se, hvilke medarbejdere som er tilgængelige for et projekt, så jeg kan tildele det rette antal.
     @Test
     public void testCheckEmployeeAvailable(){
 
     }
-*//*
+
     // 8. Som medarbejder, vil jeg gerne kunne arbejde på op til 20 aktiviteter på én uge, så jeg arbejdsbyrden ikke bliver for stor. 
     @Test
     public void testActivityLimit(){
-
-    }
-*//*
-    // 9. Som medarbejder, vil jeg gerne registrere fremtidige aktiviteter som fx. ferie, så min projektleder kan planlægge projekter uden mig.
-    @Test
-    public void testRegisterFutureTime(){
 
     }
 *//*

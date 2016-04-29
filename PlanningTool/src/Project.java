@@ -30,9 +30,8 @@ public class Project extends Exception{
 		}
 		if (param.containsKey("projEnd")) {
 			end = param.get("projEnd").toString();
-			start = param.get("projStart").toString();
-			int week = Integer.parseInt(start.substring(0, 2));
-			int year = Integer.parseInt(start.substring(4));
+			int week = Integer.parseInt(end.substring(0, 2));
+			int year = Integer.parseInt(end.substring(4));
 			if (week < 0 || week > 52 || year < 1970 || year > 9999){
 				throw new IllegalArgumentException("Error: Project not created. Wrong Input.");
 			}
@@ -45,22 +44,22 @@ public class Project extends Exception{
 	System.out.println("Project " + id + " " + name + " created.");
 }
 
-	public Object getName() {
+	public String getName() {
 		return name;
 	}
 
 
-	public Object getLead() {
+	public Employee getLead() {
 		return lead;
 	}
 
 
-	public Object getStartDate() {
+	public String getStartDate() {
 		return start;
 	}
 
 
-	public Object getEndDate() {
+	public String getEndDate() {
 		return end;
 	}
 
@@ -85,7 +84,13 @@ public class Project extends Exception{
 	}
 
 	public Activity createActivity(String actName, Set<Employee> actEmployees, String actStart, String actEnd, int actBudget) {
-		Activity newAct = new Activity(actName, actEmployees, actStart, actEnd, actBudget);
+		for (Activity act : activities) {
+		    if(act.getName() == actName){
+		    	System.err.println("Error: Invalid activity name.");
+		    	return null;
+		    }
+		}
+		Activity newAct = new Activity(actName, actEmployees, actStart, actEnd, actBudget, this);
 		activities.add(newAct);
 		return newAct;
 	}
