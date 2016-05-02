@@ -14,7 +14,7 @@ public class Login {
 	public Employee signIn(String name) {
 		currEmp = projMan.getEmployee(name);
 		if (currEmp == null){
-			System.err.println("Error: Wrong login.");
+			System.err.print("Error: Wrong login.\nTry again.\n");
 		}else{
 			System.out.println("Logged in succesfully.");
 		}
