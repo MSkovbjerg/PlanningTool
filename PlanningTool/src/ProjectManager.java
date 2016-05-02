@@ -5,8 +5,7 @@ import java.util.Set;
 
 public class ProjectManager {
 	private Map<String, Employee> employeeMap = new HashMap<String, Employee>();
-	private Set<Project> projectSet = new HashSet<Project>();
-	// Ikke helt sikker på hvordan de vil have ID.
+	private Map<String, Project> projectMap = new HashMap<String, Project>();
 	private int nextID = 0;
 	
 	public ProjectManager() {
@@ -22,18 +21,34 @@ public class ProjectManager {
 		return employeeMap;
 	}
 	
+	public void getEmployeeWorkDates(String name){
+		Employee emp = getEmployee(name);
+		if (emp == null){
+			System.err.println("Employee doesn't exist.");
+		}else{
+			Set<String> workDates = emp.getWorkDates();
+			for (String date : workDates){
+				System.out.println(date);
+			}
+		}
+	}
+	
 	public Employee getEmployee(String name){
 		return employeeMap.get(name);
 	}
 
 	public Set<Project> getProjects() {
-		return projectSet;
+		return new HashSet<Project>(projectMap.values());
+	}
+	
+	public Project getProj(String id){
+		return projectMap.get(id);
 	}
 	
 	public Project createProject(String projName, Map<String, Object> param) {
 		Project newProj = new Project(projName, nextID, this, param);
+		projectMap.put(Integer.toString(newProj.getID()), newProj);
 		nextID++;
-		projectSet.add(newProj);
 		return newProj;
 	}
 }

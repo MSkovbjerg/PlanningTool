@@ -25,13 +25,13 @@ public class Activity {
 		int week = Integer.parseInt(start.substring(0, 2));
 		int year = Integer.parseInt(start.substring(4));
 		if (week < 0 || week > 52 || year < 1970 || year > 9999){
-			throw new IllegalArgumentException("Error: Activity not created. Wrong Input.");
+			throw new IllegalArgumentException("Error: Activity not created. Invalid start.");
 		}
 		end = actEnd;
 		week = Integer.parseInt(end.substring(0, 2));
 		year = Integer.parseInt(end.substring(4));
 		if (week < 0 || week > 52 || year < 1970 || year > 9999){
-			throw new IllegalArgumentException("Error: Activity not created. Wrong Input.");
+			throw new IllegalArgumentException("Error: Activity not created. Invalid end.");
 		}
 		budget = actBudget;
 		projMan = actMan;
@@ -42,6 +42,9 @@ public class Activity {
 	}
 	
 	public Set<Employee> getEmployees() {
+		for (Employee emp : employees){
+			System.out.println(emp.getName());
+		}
 		return employees;
 	}
 	
@@ -96,11 +99,36 @@ public class Activity {
 		editWorkTime(timedate, emp);
 	}
 	
-	public String getWorkTime(String date) {
-		return workTimeMap.get(date);
+	public void getWorkTime(String date) {
+		if (date.length() < 11){
+			System.out.println(workTimeMap.get(date));
+		}else{
+			int min = Integer.parseInt(date.substring(0, 9).replaceAll("\\s",""));
+			int max = Integer.parseInt(date.substring(10).replaceAll("\\s",""));
+						
+			for (String key : workTimeMap.keySet()){
+				
+				int keydate = Integer.parseInt(key.replaceAll("\\s",""));
+				
+				if (min <= keydate && max >= keydate){
+					System.out.println(key + " " + workTimeMap.get(key));
+				}
+			}
+		}
 	}
-// "2016 8 20 14 30 17 00 employee";
+	
+	public void getWorkDates(){
+		for (String date : workTimeMap.keySet()){
+			System.out.println(date);
+		}
+	}
+	
+// "2016 08 20 14 30 17 00 employee";
 	public void editWorkTime(String timedate, Employee emp) {
+		if (timedate.length() != 22){
+			System.err.println("Invalid date or time.");
+			return;
+		}
 		String date = timedate.substring(0, 10);
 		String empTime = timedate.substring(11) + " " 
 		       + emp.getName();

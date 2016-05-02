@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.1.0">
+  <zoom_level>20</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>0</y>
+      <w>1140</w>
+      <h>900</h>
+    </coordinates>
+    <panel_attributes>::Activity
+--
+-name: java.lang.String
+-employees: java.util.Set
+-start: java.lang.String
+-end: java.lang.String
+-budget: int
+-projMan: Project
+-workTimeMap: java.util.Map
+--
++Activity(java.lang.String, java.util.Set, java.lang.String, java.lang.String, int, Project): ctor
++getName(): java.lang.String
++getEmployees(): java.util.Set
++getStart(): java.lang.String
++getEnd(): java.lang.String
++getBudget(): int
++getProject(): Project
++addEmployee(Employee): java.util.Set
++removeEmployee(Employee): java.util.Set
++setStart(java.lang.String): java.lang.String
++setEnd(java.lang.String): java.lang.String
++setBudget(int): int
++replaceWorkTime(java.lang.String, Employee): void
++getWorkTime(java.lang.String): void
++getWorkDates(): void
++editWorkTime(java.lang.String, Employee): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1160</x>
+      <y>0</y>
+      <w>1580</w>
+      <h>900</h>
+    </coordinates>
+    <panel_attributes>::Activity
+--
+-name = null: String
+-employees = null: Set&lt;Employee&gt;
+-start = null: String
+-end = null: String
+-budget = 0: int
+-projMan: Project
+-workTimeMap = new HashMap&lt;String, String&gt;(): Map&lt;String, String&gt;
+--
++Activity(String actName, Set&lt;Employee&gt; actEmployees, String actStart, String actEnd, int actBudget, Project actMan): ctor
++getName(): String
++getEmployees(): Set&lt;Employee&gt;
++getStart(): String
++getEnd(): String
++getBudget(): int
++getProject(): Project
++addEmployee(Employee newEmployee): Set&lt;Employee&gt;
++removeEmployee(Employee oldEmployee): Set&lt;Employee&gt;
++setStart(String newStart): String
++setEnd(String newEnd): String
++setBudget(int newBudget): int
++replaceWorkTime(String timedate, Employee emp): void
++getWorkTime(String date): void
++getWorkDates(): void
++editWorkTime(String timedate, Employee emp): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2760</x>
+      <y>0</y>
+      <w>1160</w>
+      <h>660</h>
+    </coordinates>
+    <panel_attributes>::Project
+--
+-name: java.lang.String
+-lead: Employee
+-start: java.lang.String
+-end: java.lang.String
+-id: int
+-activities: java.util.Map
+--
++Project(java.lang.String, int, ProjectManager, java.util.Map): ctor
++getName(): java.lang.String
++getLead(): Employee
++getStartDate(): java.lang.String
++getEndDate(): java.lang.String
++getID(): int
++setLead(Employee): boolean
++getActivities(Employee): void
++getAct(java.lang.String): Activity
++createActivity(java.lang.String, java.util.Set, java.lang.String, java.lang.String, int): Activity
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>920</y>
+      <w>1480</w>
+      <h>660</h>
+    </coordinates>
+    <panel_attributes>::Project
+--
+-name = null: String
+-lead = null: Employee
+-start = null: String
+-end = null: String
+-id = 0: int
+-activities = new HashMap&lt;String, Activity&gt;(): Map&lt;String, Activity&gt;
+--
++Project(String projName, int nextID, ProjectManager projMan, Map&lt;String, Object&gt; param): ctor
++getName(): String
++getLead(): Employee
++getStartDate(): String
++getEndDate(): String
++getID(): int
++setLead(Employee projLead): boolean
++getActivities(Employee emp): void
++getAct(String act): Activity
++createActivity(String actName, Set&lt;Employee&gt; actEmployees, String actStart, String actEnd, int actBudget): Activity
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1500</x>
+      <y>920</y>
+      <w>700</w>
+      <h>460</h>
+    </coordinates>
+    <panel_attributes>::ProjectManager
+--
+-employeeMap: java.util.Map
+-projectMap: java.util.Map
+-nextID: int
+--
++ProjectManager(): ctor
++getEmployeeMap(): java.util.Map
++getEmployeeWorkDates(java.lang.String): void
++getEmployee(java.lang.String): Employee
++getProjects(): java.util.Set
++getProj(java.lang.String): Project
++createProject(java.lang.String, java.util.Map): Project
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2220</x>
+      <y>920</y>
+      <w>1020</w>
+      <h>460</h>
+    </coordinates>
+    <panel_attributes>::ProjectManager
+--
+-employeeMap = new HashMap&lt;String, Employee&gt;(): Map&lt;String, Employee&gt;
+-projectMap = new HashMap&lt;String, Project&gt;(): Map&lt;String, Project&gt;
+-nextID = 0: int
+--
++ProjectManager(): ctor
++getEmployeeMap(): Map&lt;String, Employee&gt;
++getEmployeeWorkDates(String name): void
++getEmployee(String name): Employee
++getProjects(): Set&lt;Project&gt;
++getProj(String id): Project
++createProject(String projName, Map&lt;String, Object&gt; param): Project
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>1600</y>
+      <w>660</w>
+      <h>380</h>
+    </coordinates>
+    <panel_attributes>::Employee
+--
+-name: java.lang.String
+-workTimeMap: java.util.Map
+--
++Employee(java.lang.String): ctor
++getName(): java.lang.String
++getWorkDates(): java.util.Set
++getWorkTime(java.lang.String): void
++replaceWorkTime(java.lang.String, Activity): void
++editWorkTime(java.lang.String, Activity): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>680</x>
+      <y>1600</y>
+      <w>680</w>
+      <h>380</h>
+    </coordinates>
+    <panel_attributes>::PlanningTool
+--
+-emp: Employee
+-projMan: ProjectManager
+--
+~PlanningTool(): ctor
++PlanningTool(): ctor
++login(ProjectManager, java.lang.String): Employee
++getEmployee(java.lang.String): Employee
++help(): void
++main(java.lang.String[]): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1380</x>
+      <y>1600</y>
+      <w>900</w>
+      <h>380</h>
+    </coordinates>
+    <panel_attributes>::Employee
+--
+-name = null: String
+-workTimeMap = new HashMap&lt;String, String&gt;(): Map&lt;String, String&gt;
+--
++Employee(String newName): ctor
++getName(): String
++getWorkDates(): Set&lt;String&gt;
++getWorkTime(String date): void
++replaceWorkTime(String timedate, Activity newAct): void
++editWorkTime(String timedate, Activity newAct): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>2000</y>
+      <w>760</w>
+      <h>320</h>
+    </coordinates>
+    <panel_attributes>::PlanningTool
+--
+-emp = null: Employee
+-projMan = new ProjectManager(): ProjectManager
+--
++login(ProjectManager projMan, String logemp): Employee
++getEmployee(String name): Employee
++help(): void
++main(String[] args): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>780</x>
+      <y>2000</y>
+      <w>900</w>
+      <h>320</h>
+    </coordinates>
+    <panel_attributes>::testOpretProjekt
+--
+-outContent = new ByteArrayOutputStream(): ByteArrayOutputStream
+-errContent = new ByteArrayOutputStream(): ByteArrayOutputStream
+--
++setUpStreams(): void
++cleanUpStreams(): void
++testGetHistory(): void
++testGetHistoryWrong(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1700</x>
+      <y>2000</y>
+      <w>480</w>
+      <h>280</h>
+    </coordinates>
+    <panel_attributes>::Login
+--
+~currEmp: Employee
+~projMan: ProjectManager
+--
++Login(ProjectManager): ctor
++loggedIn(): Employee
++signIn(java.lang.String): Employee
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2200</x>
+      <y>2000</y>
+      <w>560</w>
+      <h>280</h>
+    </coordinates>
+    <panel_attributes>::Login
+--
+~currEmp = null: Employee
+~projMan = null: ProjectManager
+--
++Login(ProjectManager newProjMan): ctor
++loggedIn(): Employee
++signIn(String name): Employee
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

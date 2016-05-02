@@ -1,4 +1,5 @@
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -9,11 +10,11 @@ public class Project extends Exception{
 	private String start = null;
 	private String end = null;
 	private int id = 0;
-	private Set<Activity> activities = new HashSet<Activity>();
+	private Map<String, Activity> activities = new HashMap<String, Activity>();
 	
 	public Project(String projName, int nextID, ProjectManager projMan, Map<String, Object> param) {
 	name = projName;
-	if (param != null){
+	if (!param.isEmpty()){
 		if (param.containsKey("projLead")) {
 			lead = (Employee) param.get("projLead");
 			if (lead == null){
@@ -74,24 +75,33 @@ public class Project extends Exception{
 			return false;
 		}else{
 			lead = projLead;
-			System.out.println(lead + " assigned as project leader for project " + id + " " + name);
+			System.out.println(lead.getName() + " assigned as project leader for project " + id + " " + name);
 			return true;
 		}		
 	}
 
-	public Set<Activity> getActivities() {
-		return activities;
+	public void getActivities(Employee emp) {
+		for (Activity act : activities.values()){
+			if (emp == lead || act.getEmployees().contains(emp)){
+				System.out.println(Integer.toString(id) + " " + act.getName());
+			}
+		}
 	}
 
+	public Activity getAct(String act){
+		return activities.get(act);
+	}
+	
 	public Activity createActivity(String actName, Set<Employee> actEmployees, String actStart, String actEnd, int actBudget) {
-		for (Activity act : activities) {
+		for (Activity act : activities.values()) {
 		    if(act.getName() == actName){
 		    	System.err.println("Error: Invalid activity name.");
 		    	return null;
-		    }
+		    } 
 		}
 		Activity newAct = new Activity(actName, actEmployees, actStart, actEnd, actBudget, this);
-		activities.add(newAct);
+		activities.put(actName, newAct);
+		System.out.println("Activity " + actName + " created.");
 		return newAct;
 	}
 }
