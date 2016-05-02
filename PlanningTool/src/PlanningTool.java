@@ -130,7 +130,6 @@ public class PlanningTool {
             		System.out.println("Enter end time: (format hh:mm)");
             		String end = in.nextLine();
             		String timedate = workDate + " " + start + " " + end;
-            		timedate.replace(':', ' ');
             		emp.editWorkTime(timedate, timeEditAct);
             		timeEditAct.editWorkTime(timedate, emp);
             		break;
@@ -220,7 +219,6 @@ public class PlanningTool {
             		
             		try{
             			actProj.createActivity(actName, actEmpsSet, actStart, actEnd, actBudget);
-            			System.out.println("Activity " + actName + " created.");
             		}catch (IllegalArgumentException | StringIndexOutOfBoundsException e){
             			System.err.println(e.getMessage());
             		}

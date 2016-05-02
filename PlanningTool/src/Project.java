@@ -97,10 +97,11 @@ public class Project extends Exception{
 		    if(act.getName() == actName){
 		    	System.err.println("Error: Invalid activity name.");
 		    	return null;
-		    }
+		    } 
 		}
 		Activity newAct = new Activity(actName, actEmployees, actStart, actEnd, actBudget, this);
 		activities.put(actName, newAct);
+		System.out.println("Activity " + actName + " created.");
 		return newAct;
 	}
 }
