@@ -784,9 +784,13 @@ public class testOpretProjekt{
 		emp.getWorkTime(date);
 		System.out.println(time + " " + projActName);
 		assertTrue(outContent.toString().contains(time + " " + projActName));
-		// "2016 08 20 14 30 17 00 employee"
+		// "2016 08 20 14:30 17:00 employee"
 		newAct.getWorkTime(date);
 		assertTrue(outContent.toString().contains(time + " " + emp.getName()));
+		
+		// "2016 08 20"
+		projMan.getEmployeeWorkDates(emp);
+		assertTrue(outContent.toString().contains(time));
     }
     
     @Test
@@ -912,11 +916,16 @@ public class testOpretProjekt{
 		String time = timedate.substring(11);
 		String projActName = newProj.getID() + " " + newAct.getName();
 		
-		// "2016 08 20 14 30 17 00 projName actName"
+		// "2016 08 20 14:30 17:00 projName actName"
 		emp.getWorkTime(date);
     	assertTrue(outContent.toString().contains(time + " " + projActName));
 		emp.getWorkTime(date1 + " " + date2);
     	assertTrue(outContent.toString().contains(timedate + " " + projActName));
+    	
+		newAct.getWorkTime(date);
+    	assertTrue(outContent.toString().contains(time + " " + emp.getName()));
+		newAct.getWorkTime(date1 + " " + date2);
+    	assertTrue(outContent.toString().contains(timedate + " " + emp.getName()));
     }
 
     @Test

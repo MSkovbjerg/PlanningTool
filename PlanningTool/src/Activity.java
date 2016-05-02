@@ -74,31 +74,6 @@ public class Activity {
 		}
 	}
 	
-	public Set<Employee> removeEmployee(Employee oldEmployee) {
-		employees.remove(oldEmployee);
-		return employees;
-	}
-	
-	public String setStart(String newStart){
-		start = newStart;
-		return start;
-	}
-
-	public String setEnd(String newEnd){
-		end = newEnd;
-		return end;
-	}
-	
-	public int setBudget(int newBudget){
-		budget = newBudget;
-		return budget;
-	}
-	
-	public void replaceWorkTime(String timedate, Employee emp){
-		workTimeMap.remove(timedate.substring(0, 10));
-		editWorkTime(timedate, emp);
-	}
-	
 	public void getWorkTime(String date) {
 		if (date.length() < 11){
 			System.out.println(workTimeMap.get(date));

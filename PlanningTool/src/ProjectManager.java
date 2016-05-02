@@ -21,8 +21,7 @@ public class ProjectManager {
 		return employeeMap;
 	}
 	
-	public void getEmployeeWorkDates(String name){
-		Employee emp = getEmployee(name);
+	public void getEmployeeWorkDates(Employee emp){
 		if (emp == null){
 			System.err.println("Employee doesn't exist.");
 		}else{

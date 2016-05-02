@@ -36,12 +36,7 @@ public class Employee {
 		}
 	}
 	
-	public void replaceWorkTime(String timedate, Activity newAct){
-		workTimeMap.remove(timedate.substring(0, 10));
-		editWorkTime(timedate, newAct);
-	}
-	
-// "2016 08 20 14 30 17 00 newProj newAct";
+// "2016 08 20 14:30 17:00 newProj newAct";
 	public void editWorkTime(String timedate, Activity newAct) {
 		if (timedate.length() != 22){
 			System.err.println("Invalid date or time.");

@@ -93,7 +93,7 @@ public class PlanningTool {
             	case "4":
             		System.out.println("Type employee name:");
             		String empName = in.nextLine();
-            		projMan.getEmployeeWorkDates(empName);
+            		projMan.getEmployeeWorkDates(projMan.getEmployee(empName));
             		break;
             	case "5":
             		System.out.println("Type employee name:");
