@@ -31,7 +31,8 @@ public class PlanningTool {
     			+ "10 - Create Activity\n"
     			+ "11 - Assign Project Lead\n"
     			+ "12 - View Activity Work Time\n"
-    			+ "13 - Log out\n"
+    			+ "13 - Add Employee To Activity\n"
+    			+ "14 - Log out\n"
     			+ "0 - Help\n");
 	}
 	
@@ -285,8 +286,38 @@ public class PlanningTool {
             		}
             		timeAct.getWorkTime(actDate);
             		break;
-        		// Log out
             	case "13":
+            		System.out.println("Enter project ID:");
+            		String addEmpProjID = in.nextLine();
+            		Project addEmpProj = projMan.getProj(addEmpProjID);
+            		if (addEmpProj == null){
+            			System.err.println("Invalid project.");
+            			break;
+            		}
+            		if (addEmpProj.getLead() != emp){
+            			System.err.println("You don't have permission to do that.");
+            			break;
+            		}
+            		System.out.println("Enter activity name:");
+            		String addEmpActName = in.nextLine();
+            		Activity addEmpAct = addEmpProj.getAct(addEmpActName);
+            		if (addEmpAct == null){
+            			System.err.println("Invalid activity.");
+            			break;
+            		}
+            		System.out.println("Current employees:");
+            		Set<Employee> curremps = addEmpAct.getEmployees();
+            		if (!curremps.contains(emp) && addEmpProj.getLead() != emp){
+            			System.err.println("You don't have permission to do that.");
+            			break;
+            		}
+            		System.out.println("Type new employees name:");
+            		String addEmpName = in.nextLine();
+            		Employee addedEmp = projMan.getEmployee(addEmpName);
+            		addEmpAct.addEmployee(addedEmp);
+            		break;
+        		// Log out
+            	case "14":
             		emp = null;
             		System.out.println("Write your initials:");
             		break;

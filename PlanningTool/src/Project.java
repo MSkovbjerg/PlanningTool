@@ -97,11 +97,9 @@ public class Project extends Exception{
 	}
 	
 	public Activity createActivity(String actName, Set<Employee> actEmployees, String actStart, String actEnd, int actBudget) {
-		for (Activity act : activities.values()) {
-		    if(act.getName() == actName){
-		    	System.err.println("Error: Invalid activity name.");
-		    	return null;
-		    } 
+		if (activities.containsKey(actName)){
+	    	System.err.println("Error: Invalid activity name.");
+	    	return null;	
 		}
 		Activity newAct = new Activity(actName, actEmployees, actStart, actEnd, actBudget, this);
 		activities.put(actName, newAct);
