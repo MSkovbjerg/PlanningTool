@@ -25,7 +25,7 @@ public class Project extends Exception{
 			start = param.get("projStart").toString();
 			int week = Integer.parseInt(start.substring(0, 2));
 			int year = Integer.parseInt(start.substring(4));
-			if (week < 0 || week > 52 || year < 1970 || year > 9999){
+			if (week < 1 || week > 52 || year < 1970 || year > 9999){
 				throw new IllegalArgumentException("Error: Project not created. Wrong Input.");
 			}
 		}
@@ -33,14 +33,17 @@ public class Project extends Exception{
 			end = param.get("projEnd").toString();
 			int week = Integer.parseInt(end.substring(0, 2));
 			int year = Integer.parseInt(end.substring(4));
-			if (week < 0 || week > 52 || year < 1970 || year > 9999){
+			if (week < 1 || week > 52 || year < 1970 || year > 9999){
 				throw new IllegalArgumentException("Error: Project not created. Wrong Input.");
 			}
 		}
 	}
 
 	Calendar now = Calendar.getInstance();
-	int year = now.get(Calendar.YEAR); 
+	int year = now.get(Calendar.YEAR);
+	// ID er det nuværende år plus ID tallet paddet til 6 cifre.
+	// ID starter med 0 og stiger med 1 for hvert projekt. Dvs. IDene ser således ud:
+	// Første projekt: 2016000000 Andet projekt: 2016000001 Tredje projekt: 2016000002 osv. 
 	id = Integer.parseInt(Integer.toString(year) + String.format("%06d", nextID));
 	System.out.println("Project " + id + " " + name + " created.");
 }
@@ -82,6 +85,7 @@ public class Project extends Exception{
 
 	public void getActivities(Employee emp) {
 		for (Activity act : activities.values()){
+			// Man kan se aktiviteterne man selv er på, eller alle sammen hvis man er projekt-leder.
 			if (emp == lead || act.getEmployees().contains(emp)){
 				System.out.println(Integer.toString(id) + " " + act.getName());
 			}

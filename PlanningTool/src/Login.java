@@ -13,6 +13,7 @@ public class Login {
 
 	public Employee signIn(String name) {
 		currEmp = projMan.getEmployee(name);
+		// Hvis den ansatte ikke eksisterer får man null, og ellers den ansatte.
 		if (currEmp == null){
 			System.err.print("Error: Wrong login.\nTry again.\n");
 		}else{
