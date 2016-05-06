@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.1.0">
+  <zoom_level>20</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1960</x>
+      <y>1360</y>
+      <w>1580</w>
+      <h>700</h>
+    </coordinates>
+    <panel_attributes>Activity
+--
+-name = null: String
+-employees = null: Set&lt;Employee&gt;
+-start = null: String
+-end = null: String
+-budget = 0: int
+-projMan: Project
+-workTimeMap = new HashMap&lt;String, String&gt;(): Map&lt;String, String&gt;
+--
++Activity(String actName, Set&lt;Employee&gt; actEmployees, String actStart, String actEnd, int actBudget, Project actMan)
++getName(): String
++getEmployees(): Set&lt;Employee&gt;
++getStart(): String
++getEnd(): String
++getBudget(): int
++getProject(): Project
++addEmployee(Employee newEmployee): Set&lt;Employee&gt;
++getWorkTime(String date): void
++getWorkDates(): void
++editWorkTime(String timedate, Employee emp): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2260</x>
+      <y>680</y>
+      <w>900</w>
+      <h>360</h>
+    </coordinates>
+    <panel_attributes>Employee
+--
+-name = null: String
+-workTimeMap = new HashMap&lt;String, String&gt;(): Map&lt;String, String&gt;
+--
++Employee(String newName)
++getName(): String
++getWorkDates(): Set&lt;String&gt;
++getWorkTime(String date): void
++editWorkTime(String timedate, Activity newAct): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>40</y>
+      <w>560</w>
+      <h>280</h>
+    </coordinates>
+    <panel_attributes>Login
+--
+~currEmp = null: Employee
+~projMan = null: ProjectManager
+--
++Login(ProjectManager newProjMan): ctor
++loggedIn(): Employee
++signIn(String name): Employee</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>900</x>
+      <y>0</y>
+      <w>760</w>
+      <h>320</h>
+    </coordinates>
+    <panel_attributes>PlanningTool
+--
+-emp = null: Employee
+-projMan = new ProjectManager(): ProjectManager
+--
++login(ProjectManager projMan, String logemp): Employee
++getEmployee(String name): Employee
++help(): void
++main(String[] args): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>100</x>
+      <y>1360</y>
+      <w>1480</w>
+      <h>640</h>
+    </coordinates>
+    <panel_attributes>Project
+--
+-name = null: String
+-lead = null: Employee
+-start = null: String
+-end = null: String
+-id = 0: int
+-activities = new HashMap&lt;String, Activity&gt;(): Map&lt;String, Activity&gt;
+--
++Project(String projName, int nextID, ProjectManager projMan, Map&lt;String, Object&gt; param)
++getName(): String
++getLead(): Employee
++getStartDate(): String
++getEndDate(): String
++getID(): int
++setLead(Employee projLead): boolean
++getActivities(Employee emp): void
++getAct(String act): Activity
++createActivity(String actName, Set&lt;Employee&gt; actEmployees, String actStart, String actEnd, int actBudget): Activity
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>800</x>
+      <y>640</y>
+      <w>1020</w>
+      <h>460</h>
+    </coordinates>
+    <panel_attributes>ProjectManager
+--
+-employeeMap = new HashMap&lt;String, Employee&gt;(): Map&lt;String, Employee&gt;
+-projectMap = new HashMap&lt;String, Project&gt;(): Map&lt;String, Project&gt;
+-nextID = 0: int
+--
++ProjectManager()
++getEmployeeMap(): Map&lt;String, Employee&gt;
++getEmployeeWorkDates(Employee emp): void
++getEmployee(String name): Employee
++getProjects(): Set&lt;Project&gt;
++getProj(String id): Project
++createProject(String projName, Map&lt;String, Object&gt; param): Project</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1260</x>
+      <y>300</y>
+      <w>60</w>
+      <h>380</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1
+m2=1</panel_attributes>
+    <additional_attributes>10.0;170.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>540</x>
+      <y>140</y>
+      <w>400</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+Log In
+m1=1
+m2=1</panel_attributes>
+    <additional_attributes>10.0;20.0;180.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>260</x>
+      <y>300</y>
+      <w>580</w>
+      <h>640</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+Check Employee
+m1=1
+m2=1</panel_attributes>
+    <additional_attributes>270.0;290.0;10.0;290.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>920</x>
+      <y>1080</y>
+      <w>100</w>
+      <h>320</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m2=0..*
+m1=1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;140.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1800</x>
+      <y>860</y>
+      <w>500</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m2=0..*
+m1=1</panel_attributes>
+    <additional_attributes>10.0;10.0;230.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1560</x>
+      <y>1720</y>
+      <w>440</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m2=0..*
+m1=1</panel_attributes>
+    <additional_attributes>10.0;10.0;200.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2880</x>
+      <y>1020</y>
+      <w>100</w>
+      <h>380</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m2=0..*
+m1=0..*</panel_attributes>
+    <additional_attributes>10.0;170.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1640</x>
+      <y>140</y>
+      <w>1080</w>
+      <h>580</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Get Work Time
+Edit Work Time
+m2=1
+m1=1</panel_attributes>
+    <additional_attributes>10.0;20.0;520.0;20.0;520.0;270.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1320</x>
+      <y>1020</y>
+      <w>1280</w>
+      <h>380</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m2=0..*
+m1=0..*</panel_attributes>
+    <additional_attributes>10.0;170.0;10.0;100.0;600.0;100.0;600.0;10.0</additional_attributes>
+  </element>
+</diagram>

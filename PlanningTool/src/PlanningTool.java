@@ -24,25 +24,24 @@ public class PlanningTool {
     			+ "3 - View All Employees\n"
     			+ "4 - View Employee Dates\n"
     			+ "5 - View Employee Work Time\n"
-    			+ "6 - Edit Work Time.\n"
+    			+ "6 - Edit Work Time\n"
     			+ "7 - View Project\n"
     			+ "8 - View All Activities\n"
     			+ "9 - View Activity\n"
     			+ "10 - Create Activity\n"
     			+ "11 - Assign Project Lead\n"
     			+ "12 - View Activity Work Time\n"
-    			+ "13 - Log out.\n"
+    			+ "13 - Log out\n"
     			+ "0 - Help\n");
 	}
 	
-    public static void main(String[] args) {
-    	//ProjectManager projMan = new ProjectManager();
-    	
+    public static void main(String[] args) { 	
     	Scanner in = new Scanner(System.in);
     	
     	System.out.println("Write your initials:");
-    	
+
     	while(true){
+    		// Da man kan logge ud tjekkes login inde i loopet, så man kan logge ind igen.
         	if (emp == null){
         		String logemp = in.nextLine();
             	
@@ -52,7 +51,9 @@ public class PlanningTool {
             		help();
             	}
         	}else{
+        		// Interfacet styres med et switch-case. Case-inputtet er tal, da kommandoerne ellers kan blive lange.
         		switch (in.nextLine()) {
+        		//Create Project
             	case "1":
             		System.out.println("Type project name:");
             		String projName = in.nextLine();
@@ -65,6 +66,7 @@ public class PlanningTool {
             		
             		Map<String, Object> param = new HashMap<String, Object>();
             		
+            		// Informationen kommer kun med hvis der er blevet indtastet noget.
             		if (!leadName.equals("")){
             			param.put("projLead", getEmployee(leadName));
             		}
@@ -81,20 +83,26 @@ public class PlanningTool {
             			System.err.println("Error: Project not created. Wrong Input.");
             		}
             		break;
+        		// View All Projects
             	case "2":
             		Set<Project> projects = projMan.getProjects();
             		for (Project p : projects){
             			System.out.println(p.getID() + " " + p.getName());
             		}
             		break;
+            	// View All Employees
             	case "3":
             		projMan.getEmployeeMap();
             		break;
+        		// View Employee Dates
+        		// Viser alle datoer en bestemt ansat har arbejdet på.
             	case "4":
             		System.out.println("Type employee name:");
             		String empName = in.nextLine();
             		projMan.getEmployeeWorkDates(projMan.getEmployee(empName));
             		break;
+        		// View Employee Work Time
+        		// Viser time-information for den valgte ansatte på den valgte dato eller dato-interval.
             	case "5":
             		System.out.println("Type employee name:");
             		String dateEmpName = in.nextLine();
@@ -108,6 +116,7 @@ public class PlanningTool {
             		}
             		dateEmp.getWorkTime(date);
             		break;
+        		// Edit Work Time
             	case "6":
             		System.out.println("Enter project ID:");
             		String timeEditProjID = in.nextLine();
@@ -130,9 +139,11 @@ public class PlanningTool {
             		System.out.println("Enter end time: (format hh:mm)");
             		String end = in.nextLine();
             		String timedate = workDate + " " + start + " " + end;
+            		// Arbejdstiden ændres både hos aktiviteten og den ansatte.
             		emp.editWorkTime(timedate, timeEditAct);
             		timeEditAct.editWorkTime(timedate, emp);
             		break;
+        		// View Project
             	case "7":
             		System.out.println("Enter project ID:");
             		String infoProjID = in.nextLine();
@@ -148,6 +159,8 @@ public class PlanningTool {
             		System.out.println("Start to end");
             		System.out.println(infoProj.getStartDate() + " to " + infoProj.getEndDate());
             		break;
+        		// View All Activities
+        		// Alle aktiviteter for et bestemt projekt, ikke alle i hele programmet.
             	case "8":
             		System.out.println("Enter project ID:");
             		String checkActProjID = in.nextLine();
@@ -158,6 +171,7 @@ public class PlanningTool {
             		}
             		checkActProj.getActivities(emp);
             		break;
+        		// View Activity
             	case "9":
             		System.out.println("Enter project ID:");
             		String actInfoProjID = in.nextLine();
@@ -184,6 +198,7 @@ public class PlanningTool {
             		System.out.println("Work Dates:");
             		getAct.getWorkDates();
             		break;
+        		// Create Activity
             	case "10":
             		System.out.println("Enter project ID.");
             		String projID = in.nextLine();
@@ -196,10 +211,9 @@ public class PlanningTool {
             			System.err.println("You don't have permission to do that.");
             			break;
             		}
-            		//String actName, Set<Employee> actEmployees, String actStart, String actEnd, int actBudget
             		System.out.println("Type activity name:");
             		String actName = in.nextLine();
-            		System.out.println("Type employees: (space between each.)");
+            		System.out.println("Type employees: (space between each)");
             		String actEmps = in.nextLine();
             		Set<Employee> actEmpsSet = new HashSet<Employee>();
             		for (String em : actEmps.split(" ")){
@@ -223,6 +237,7 @@ public class PlanningTool {
             			System.err.println(e.getMessage());
             		}
             		break;
+            	// Assign Project Lead
             	case "11":
             		System.out.println("Enter project ID:");
             		String addProjID = in.nextLine();
@@ -240,6 +255,8 @@ public class PlanningTool {
             		}
             		addProj.setLead(newLead);
             		break;
+        		// View Activity Work Time
+        		// Viser time-information for den valgte aktivitet på den valgte dato eller dato-interval.
             	case "12":
             		System.out.println("Enter project ID:");
             		String actTimeProjID = in.nextLine();
@@ -268,10 +285,12 @@ public class PlanningTool {
             		}
             		timeAct.getWorkTime(actDate);
             		break;
+        		// Log out
             	case "13":
             		emp = null;
             		System.out.println("Write your initials:");
             		break;
+        		// Help
             	case "0":
             		help();
             		break;

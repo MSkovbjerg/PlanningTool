@@ -9,6 +9,7 @@ public class ProjectManager {
 	private int nextID = 0;
 	
 	public ProjectManager() {
+		// De ansatte er allerede i systemet, og indsættes automatisk når programmet starter.
 		employeeMap.put("hund", new Employee("hund"));
 		employeeMap.put("kat", new Employee("kat"));
 		employeeMap.put("fritte", new Employee("fritte"));
@@ -46,6 +47,7 @@ public class ProjectManager {
 	
 	public Project createProject(String projName, Map<String, Object> param) {
 		Project newProj = new Project(projName, nextID, this, param);
+		// Projektet sættes ind i et map med dets ID som key.
 		projectMap.put(Integer.toString(newProj.getID()), newProj);
 		nextID++;
 		return newProj;

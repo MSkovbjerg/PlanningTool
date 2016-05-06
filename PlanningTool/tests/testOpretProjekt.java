@@ -782,7 +782,6 @@ public class testOpretProjekt{
 		
 		// "2016 08 20 14:30 17:00 projName actName"
 		emp.getWorkTime(date);
-		System.out.println(time + " " + projActName);
 		assertTrue(outContent.toString().contains(time + " " + projActName));
 		// "2016 08 20 14:30 17:00 employee"
 		newAct.getWorkTime(date);
