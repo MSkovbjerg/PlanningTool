@@ -8,7 +8,7 @@ public class Activity {
 	private String start = null;
 	private String end = null;
 	private int budget = 0;
-	private Project projMan;
+	private Project proj;
 	private Map<String, String> workTimeMap = new HashMap<String, String>();
 	
 	public Activity(String actName, Set<Employee> actEmployees, String actStart, String actEnd, int actBudget, Project actMan){
@@ -35,7 +35,7 @@ public class Activity {
 			throw new IllegalArgumentException("Error: Activity not created. Invalid end.");
 		}
 		budget = actBudget;
-		projMan = actMan;
+		proj = actMan;
 	}
 	
 	public String getName() {
@@ -62,17 +62,17 @@ public class Activity {
 	}
 	
 	public Project getProject(){
-		return projMan;
+		return proj;
 	}
 	
 	public Set<Employee> addEmployee(Employee newEmployee) {
 		if (newEmployee == null){
 			System.err.println("Error: Employee doesn't exist.");
 			return employees;
-		}else{
-			employees.add(newEmployee);
-			return employees;	
 		}
+		employees.add(newEmployee);
+		System.out.println(newEmployee.getName() + " added to project " + proj.getID() + " " + proj.getName() + " activity " + getName());
+		return employees;	
 	}
 	
 	public void getWorkTime(String date) {
