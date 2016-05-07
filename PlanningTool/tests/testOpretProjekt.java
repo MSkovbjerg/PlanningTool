@@ -12,9 +12,8 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-
-//Skal nok deles op i flere klasser. Dog i starten med happy path vil dette nok være bedst.
 public class testOpretProjekt{
+	// Det her i starten sørger for at testen også kan læse output til konsollen.
 	private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 	private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
 
@@ -31,6 +30,8 @@ public class testOpretProjekt{
 	}
 
 	// 1. Som medarbejer, vil jeg gerne kunne logge ind i systemet, så jeg kan oprette et projekt.
+	
+	// Login korrekt.
 	@Test
 	public void testLogin(){
 		ProjectManager projMan = new ProjectManager();
@@ -48,6 +49,7 @@ public class testOpretProjekt{
 		assertSame(li.loggedIn(), emp);
 	}
 
+	// Login med ugyldige initialer.
 	@Test
 	public void testLoginFailed(){
 		ProjectManager projMan = new ProjectManager();
@@ -68,6 +70,7 @@ public class testOpretProjekt{
 
     // 2. Som medarbejder, vil jeg gerne kunne oprette et projekt, så jeg kan have overblik over aktiviteter og medarbejdere.
 
+	// Opret projekt korrekt.
 	@Test
     public void testCreateProject(){
     	ProjectManager projMan = new ProjectManager();
@@ -126,6 +129,7 @@ public class testOpretProjekt{
     	assertEquals(year, Integer.parseInt(Integer.toString(id).substring(0, 4)));
     }
 
+	// Opret et projekt med kun et navn.
     @Test
     public void testCreateProjectEmpty(){
     	ProjectManager projMan = new ProjectManager();
@@ -176,6 +180,7 @@ public class testOpretProjekt{
     	assertEquals(year, Integer.parseInt(Integer.toString(id).substring(0, 4)));
     }
 
+    // Opret projekt med kun projektleder og startdato men uden slutdato.
     @Test
     public void testCreateProjectTwoVar(){
     	ProjectManager projMan = new ProjectManager();
@@ -231,6 +236,7 @@ public class testOpretProjekt{
     	assertEquals(year, Integer.parseInt(Integer.toString(id).substring(0, 4)));
     }
 
+    // Opret projekt med en projektleder der ikke eksisterer.
     @Test
     public void testCreateProjectWrongLead(){
     	ProjectManager projMan = new ProjectManager();
@@ -266,6 +272,7 @@ public class testOpretProjekt{
     	assertNull(newProj);
     }
 
+    // Opret projekt med ugyldig start-tidspunkt.
     @Test
     public void testCreateProjectWrongStart(){
     	ProjectManager projMan = new ProjectManager();
@@ -304,6 +311,7 @@ public class testOpretProjekt{
 
     // 3. Som medarbejder, vil jeg gerne kunne tildele en projektleder til et projekt, så nogen kan lede projektet.
     
+    // Tildel projektleder korrekt.
     @Test
     public void testAssignProjLead(){
     	ProjectManager projMan = new ProjectManager();
@@ -337,6 +345,7 @@ public class testOpretProjekt{
     	assertSame(projMan.getProjects().iterator().next().getLead(), projLead);
     }
     
+    // Tildel projektleder der ikke eksisterer.
     @Test
     public void testAssignProjLeadWrongLead(){
     	ProjectManager projMan = new ProjectManager();
@@ -370,6 +379,7 @@ public class testOpretProjekt{
 
     // 4. Som projektleder, vil jeg gerne opdele projekter i aktiviteter, så jeg kan fordele opgaver til medarbejdere.
 
+    // Opret aktivitet korrekt.
     @Test
     public void testCreateActivity(){
     	ProjectManager projMan = new ProjectManager();
@@ -416,6 +426,7 @@ public class testOpretProjekt{
     	assertEquals(foundAct.getName(), actName);
     }
 
+    // Opret aktivitet med en ansat der ikke eksisterer.
     @Test
     public void testCreateActivityWrongEmployee(){
     	ProjectManager projMan = new ProjectManager();
@@ -466,6 +477,7 @@ public class testOpretProjekt{
     	assertEquals(foundAct.getName(), actName);
     }
 
+    // Opret aktivitet med to ansatte sat på.
     @Test
     public void testCreateActivityTwoEmployees(){
     	ProjectManager projMan = new ProjectManager();
@@ -517,7 +529,8 @@ public class testOpretProjekt{
     	assertSame(foundAct.getEmployees(), actEmployees);
     	assertEquals(foundAct.getName(), actName);
     }
-
+    
+    // Hvis en aktivitet bliver oprettet med samme navn som en anden.
     @Test
     public void testCreateActivityDupName(){
     	ProjectManager projMan = new ProjectManager();
@@ -574,9 +587,9 @@ public class testOpretProjekt{
     	assertTrue(outContent.toString().contains(actName));
     }
     
-    // 5. Som projektleder, vil jeg gerne kunne tilføje mere end én medarbejder på et projekt og dets aktiviteter,
-    //	  så flere medarbejdere kan arbejde på samme projekt.
-
+    // Tilføj medarbejder til eksisterende projekt.
+    
+    // Alting korrekt.
     @Test
     public void testAddEmployee(){
     	ProjectManager projMan = new ProjectManager();
@@ -641,6 +654,7 @@ public class testOpretProjekt{
     	assertTrue(foundAct.getEmployees().contains(empThree));
     }
 
+    // Med en medarbejder der ikke eksisterer.
     @Test
     public void testAddEmployeeWrongEmp(){
     	ProjectManager projMan = new ProjectManager();
@@ -707,8 +721,9 @@ public class testOpretProjekt{
     	assertFalse(foundAct.getEmployees().contains(empThree));
     }
 
-    // x. Som medarbejder vil gerne kunne få en liste over alle employees.
-
+    // Som medarbejder vil gerne kunne få en liste over alle employees.
+    
+    
     @Test
     public void getEmployeeList(){
     	ProjectManager projMan = new ProjectManager();
@@ -732,6 +747,7 @@ public class testOpretProjekt{
     // 6. Som medarbejder, vil jeg gerne kunne registrere hvor meget tid jeg bruger på forskellige aktiviteter hver dag,
     //	  så min projektleder og jeg kan holde øje med tiden.
 
+    // Registrer tid korrekt.
     @Test
     public void testRegisterTime(){
     	ProjectManager projMan = new ProjectManager();
@@ -792,8 +808,9 @@ public class testOpretProjekt{
 		assertTrue(outContent.toString().contains(time));
     }
     
+    // Tilføj flere arbejdstider på samme dag.
     @Test
-    public void testRegisterTimeReplace(){
+    public void testRegisterTimeAdd(){
     	ProjectManager projMan = new ProjectManager();
     	Login li = new Login(projMan);
     	Employee emp = li.signIn("hund");
@@ -840,11 +857,10 @@ public class testOpretProjekt{
 		String time = timedate.substring(11);
 		String projActName = newProj.getID() + " " + newAct.getName();
 		
-		// "2016 08 20 14 30 17 00 projName actName"
+		// "2016 08 20 14:30 17:00 projName actName"
 		emp.getWorkTime(date);
-		System.out.println(time + " " + projActName);
 		assertTrue(outContent.toString().contains(time + " " + projActName));
-		// "2016 08 20 14 30 17 00 employee"
+		// "2016 08 20 14:30 17:00 employee"
 		newAct.getWorkTime(date);
 		assertTrue(outContent.toString().contains(time + " " + emp.getName()));
 		
@@ -855,15 +871,20 @@ public class testOpretProjekt{
 		emp.editWorkTime(timedate, newAct);
 		newAct.editWorkTime(timedate, emp);
 		
-		// "2016 08 20 14 30 17 00 projName actName"
+		// "2016 08 20 14:30 17:00 projName actName"
 		emp.getWorkTime(date);
 		System.out.println(time + " " + projActName);
+		assertTrue(outContent.toString().contains(time + " " + projActName));
 		assertTrue(outContent.toString().contains(newTime + " " + projActName));
-		// "2016 08 20 14 30 17 00 employee"
+		// "2016 08 20 14:30 17:00 employee"
 		newAct.getWorkTime(date);
+		assertTrue(outContent.toString().contains(time + " " + emp.getName()));	
 		assertTrue(outContent.toString().contains(newTime + " " + emp.getName()));		
     }
 
+    // 7. Aflæsning af arbejdshistorik.
+    
+    // Hent arbejdshistorik korrekt.
     @Test
     public void testGetHistory(){
     	ProjectManager projMan = new ProjectManager();
@@ -927,6 +948,7 @@ public class testOpretProjekt{
     	assertTrue(outContent.toString().contains(timedate + " " + emp.getName()));
     }
 
+    // Hent arbejdshistorik med forkert dato.
     @Test
     public void testGetHistoryWrong(){
     	ProjectManager projMan = new ProjectManager();
@@ -978,12 +1000,11 @@ public class testOpretProjekt{
 		String time = timedate.substring(11);
 		String projActName = newProj.getID() + " " + newAct.getName();
 		
-		// "2016 08 20 14 30 17 00 projName actName"
+		// "2016 08 20 14:30 17:00 projName actName"
+		emp.getWorkTime(date1 + " " + date2);
+    	assertFalse(outContent.toString().contains(time + " " + projActName));
 		emp.getWorkTime(date);
     	assertTrue(outContent.toString().contains(time + " " + projActName));
-    	System.out.println("this is wrong");
-		emp.getWorkTime(date1 + " " + date2);
-    	assertTrue(outContent.toString().contains("this is wrong"));
     }
 }
     
