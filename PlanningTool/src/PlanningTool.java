@@ -295,10 +295,6 @@ public class PlanningTool {
             			System.err.println("Invalid project.");
             			break;
             		}
-            		if (addEmpProj.getLead() != emp){
-            			System.err.println("You don't have permission to do that.");
-            			break;
-            		}
             		System.out.println("Enter activity name:");
             		String addEmpActName = in.nextLine();
             		Activity addEmpAct = addEmpProj.getAct(addEmpActName);
