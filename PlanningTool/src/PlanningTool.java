@@ -286,6 +286,7 @@ public class PlanningTool {
             		}
             		timeAct.getWorkTime(actDate);
             		break;
+        		// Add Employee To Activity
             	case "13":
             		System.out.println("Enter project ID:");
             		String addEmpProjID = in.nextLine();
