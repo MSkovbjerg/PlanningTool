@@ -3,6 +3,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+// Michael
 public class ProjectManager {
 	private Map<String, Employee> employeeMap = new HashMap<String, Employee>();
 	private Map<String, Project> projectMap = new HashMap<String, Project>();

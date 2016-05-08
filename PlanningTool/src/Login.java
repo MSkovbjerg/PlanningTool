@@ -1,4 +1,5 @@
 
+// Michael
 public class Login {
 	Employee currEmp = null;
 	ProjectManager projMan = null;

@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+// Rikke
 public class Project extends Exception{
 	private String name = null;
 	private Employee lead = null;

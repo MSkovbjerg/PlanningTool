@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
+// Alle
 public class PlanningTool {
 	private static Employee emp = null;
 	private static ProjectManager projMan = new ProjectManager();

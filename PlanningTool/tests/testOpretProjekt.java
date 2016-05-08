@@ -31,6 +31,7 @@ public class testOpretProjekt{
 
 	// 1. Som medarbejer, vil jeg gerne kunne logge ind i systemet, så jeg kan oprette et projekt.
 	
+	// Emil
 	// Login korrekt.
 	@Test
 	public void testLogin(){
@@ -49,6 +50,7 @@ public class testOpretProjekt{
 		assertSame(li.loggedIn(), emp);
 	}
 
+	// Emil
 	// Login med ugyldige initialer.
 	@Test
 	public void testLoginFailed(){
@@ -70,6 +72,7 @@ public class testOpretProjekt{
 
     // 2. Som medarbejder, vil jeg gerne kunne oprette et projekt, så jeg kan have overblik over aktiviteter og medarbejdere.
 
+	// Emil
 	// Opret projekt korrekt.
 	@Test
     public void testCreateProject(){
@@ -129,6 +132,7 @@ public class testOpretProjekt{
     	assertEquals(year, Integer.parseInt(Integer.toString(id).substring(0, 4)));
     }
 
+	// Emil
 	// Opret et projekt med kun et navn.
     @Test
     public void testCreateProjectEmpty(){
@@ -180,6 +184,7 @@ public class testOpretProjekt{
     	assertEquals(year, Integer.parseInt(Integer.toString(id).substring(0, 4)));
     }
 
+    // Emil
     // Opret projekt med kun projektleder og startdato men uden slutdato.
     @Test
     public void testCreateProjectTwoVar(){
@@ -236,6 +241,7 @@ public class testOpretProjekt{
     	assertEquals(year, Integer.parseInt(Integer.toString(id).substring(0, 4)));
     }
 
+    // Emil
     // Opret projekt med en projektleder der ikke eksisterer.
     @Test
     public void testCreateProjectWrongLead(){
@@ -272,6 +278,7 @@ public class testOpretProjekt{
     	assertNull(newProj);
     }
 
+    // Emil
     // Opret projekt med ugyldig start-tidspunkt.
     @Test
     public void testCreateProjectWrongStart(){
@@ -309,6 +316,7 @@ public class testOpretProjekt{
     	assertNull(newProj);
     }
 
+    // Emil
     // 3. Som medarbejder, vil jeg gerne kunne tildele en projektleder til et projekt, så nogen kan lede projektet.
     
     // Tildel projektleder korrekt.
@@ -345,6 +353,7 @@ public class testOpretProjekt{
     	assertSame(projMan.getProjects().iterator().next().getLead(), projLead);
     }
     
+    // Emil
     // Tildel projektleder der ikke eksisterer.
     @Test
     public void testAssignProjLeadWrongLead(){
@@ -379,6 +388,7 @@ public class testOpretProjekt{
 
     // 4. Som projektleder, vil jeg gerne opdele projekter i aktiviteter, så jeg kan fordele opgaver til medarbejdere.
 
+    // Michael
     // Opret aktivitet korrekt.
     @Test
     public void testCreateActivity(){
@@ -426,6 +436,7 @@ public class testOpretProjekt{
     	assertEquals(foundAct.getName(), actName);
     }
 
+    // Michael
     // Opret aktivitet med en ansat der ikke eksisterer.
     @Test
     public void testCreateActivityWrongEmployee(){
@@ -477,6 +488,7 @@ public class testOpretProjekt{
     	assertEquals(foundAct.getName(), actName);
     }
 
+    // Michael
     // Opret aktivitet med to ansatte sat på.
     @Test
     public void testCreateActivityTwoEmployees(){
@@ -530,6 +542,7 @@ public class testOpretProjekt{
     	assertEquals(foundAct.getName(), actName);
     }
     
+    // Michael
     // Hvis en aktivitet bliver oprettet med samme navn som en anden.
     @Test
     public void testCreateActivityDupName(){
@@ -587,8 +600,9 @@ public class testOpretProjekt{
     	assertTrue(outContent.toString().contains(actName));
     }
     
-    // Tilføj medarbejder til eksisterende projekt.
+    // Tilføj medarbejder til eksisterende aktivitet i projekt.
     
+    // Michael
     // Alting korrekt.
     @Test
     public void testAddEmployee(){
@@ -654,6 +668,7 @@ public class testOpretProjekt{
     	assertTrue(foundAct.getEmployees().contains(empThree));
     }
 
+    // Michael
     // Med en medarbejder der ikke eksisterer.
     @Test
     public void testAddEmployeeWrongEmp(){
@@ -723,7 +738,7 @@ public class testOpretProjekt{
 
     // Som medarbejder vil gerne kunne få en liste over alle employees.
     
-    
+    // Rikke
     @Test
     public void getEmployeeList(){
     	ProjectManager projMan = new ProjectManager();
@@ -747,6 +762,7 @@ public class testOpretProjekt{
     // 6. Som medarbejder, vil jeg gerne kunne registrere hvor meget tid jeg bruger på forskellige aktiviteter hver dag,
     //	  så min projektleder og jeg kan holde øje med tiden.
 
+    // Rikke
     // Registrer tid korrekt.
     @Test
     public void testRegisterTime(){
@@ -808,6 +824,7 @@ public class testOpretProjekt{
 		assertTrue(outContent.toString().contains(time));
     }
     
+    // Rikke
     // Tilføj flere arbejdstider på samme dag.
     @Test
     public void testRegisterTimeAdd(){
@@ -884,6 +901,7 @@ public class testOpretProjekt{
 
     // 7. Aflæsning af arbejdshistorik.
     
+    // Rikke
     // Hent arbejdshistorik korrekt.
     @Test
     public void testGetHistory(){
@@ -948,6 +966,7 @@ public class testOpretProjekt{
     	assertTrue(outContent.toString().contains(timedate + " " + emp.getName()));
     }
 
+    // Rikke
     // Hent arbejdshistorik med forkert dato.
     @Test
     public void testGetHistoryWrong(){
