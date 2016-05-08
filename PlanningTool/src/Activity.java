@@ -2,6 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+// Lavet af Emil
 public class Activity {
 	private String name = null;
 	private Set<Employee> employees = null;

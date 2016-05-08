@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
+// Alle
 public class PlanningTool {
 	private static Employee emp = null;
 	private static ProjectManager projMan = new ProjectManager();
@@ -293,10 +294,6 @@ public class PlanningTool {
             		Project addEmpProj = projMan.getProj(addEmpProjID);
             		if (addEmpProj == null){
             			System.err.println("Invalid project.");
-            			break;
-            		}
-            		if (addEmpProj.getLead() != emp){
-            			System.err.println("You don't have permission to do that.");
             			break;
             		}
             		System.out.println("Enter activity name:");
